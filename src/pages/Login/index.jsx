@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate} from 'react-router-dom'
 
 import styles from "./Login.module.scss";
-import { fetchUserData, selectIsAuth } from './../../redux/slices/auth';
+import { fetchAuth, selectIsAuth } from './../../redux/slices/auth';
 
 export const Login = () => {
   const isAuth = useSelector(selectIsAuth)
@@ -26,8 +26,16 @@ export const Login = () => {
     mode: 'onChange'
   });
 
-  const onSubmit = (values) => {
-    distatch(fetchUserData(values))
+  const onSubmit = async (values) => {
+
+    const data = await distatch(fetchAuth(values));
+    console.log(data)
+    if (!data.payload) {
+      return alert('Не удалось авторизоваться!');
+    }
+    if ('token' in data.payload) {
+      window.localStorage.setItem('token', data.payload.token);
+    }
   }
 
   if (isAuth) {
