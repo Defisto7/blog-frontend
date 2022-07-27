@@ -28,6 +28,7 @@ export const AddPost = () => {
       formData.append("image", file);
       const { data } = await axios.post("/upload", formData);
       setImageUrl(data.url);
+      console.log(data)
     } catch (err) {
       console.warm(err);
       alert("Ошибка при загрузке файла!");
@@ -52,9 +53,8 @@ export const AddPost = () => {
         tags: tags.split(','),
         text
       }
-
+      
       const { data } = await axios.post('/posts', fields)
-
       const id = data._id;
 
       navigate(`/posts/${id}`)

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { Post } from "../components/Post";
 import { TagsBlock } from "../components/TagsBlock";
 import { CommentsBlock } from "../components/CommentsBlock";
-import axios from "../axios";
 import { fetchPosts, fetchTags } from "../redux/slices/posts";
 
 export const Home = () => {
@@ -22,6 +21,7 @@ export const Home = () => {
     distatch(fetchPosts());
     distatch(fetchTags());
   }, []);
+  console.log(posts.items)
 
   return (
     <>
@@ -42,7 +42,7 @@ export const Home = () => {
               <Post
                 id={obj._id}
                 title={obj.title}
-                imageUrl={obj.imageUrl}
+                imageUrl={obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ''}
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
